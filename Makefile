@@ -37,6 +37,7 @@ test:
 	./examples/bin/miserables
 	./examples/bin/hyper-directed
 	./examples/bin/hyper-undirected	
+	./examples/bin/usual-suspects
 
 .PHONY: clean
 clean:

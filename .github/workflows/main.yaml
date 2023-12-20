@@ -25,5 +25,4 @@ jobs:
     - name: Build and Basic Test
       run: |
         make
-        make run
-        # test -coverprofile=coveragetxt -race ./...
+        make test
