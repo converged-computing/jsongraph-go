@@ -1,10 +1,5 @@
 package graph
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 /*
 
 A JSONGraphSchema can take one of two types:
@@ -106,8 +101,8 @@ type Metadata map[string]interface{}
 
 type Edge struct {
 	Id       string   `json:"id,omitempty" yaml:"id,omitempty" mapstructure:"id,omitempty"`
-	Source   []string `json:"source" yaml:"source" mapstructure:"source"`
-	Target   []string `json:"target" yaml:"target" mapstructure:"target"`
+	Source   string   `json:"source" yaml:"source" mapstructure:"source"`
+	Target   string   `json:"target" yaml:"target" mapstructure:"target"`
 	Relation string   `json:"relation,omitempty" yaml:"relation,omitempty" mapstructure:"relation,omitempty"`
 	Label    string   `json:"label,omitempty" yaml:"label,omitempty" mapstructure:"label,omitempty"`
 	Directed bool     `json:"directed,omitempty" yaml:"directed,omitempty" mapstructure:"directed,omitempty"`
@@ -129,67 +124,4 @@ type UndirectedEdge struct {
 	Relation string   `json:"relation,omitempty" yaml:"relation,omitempty" mapstructure:"relation,omitempty"`
 	Label    string   `json:"label,omitempty" yaml:"label,omitempty" mapstructure:"label,omitempty"`
 	Metadata Metadata `json:"metadata,omitempty" yaml:"metadata,omitempty" mapstructure:"metadata,omitempty"`
-}
-
-// UnmarshalJSON implements json.Unmarshaler.
-func (j *DirectedEdge) UnmarshalJSON(b []byte) error {
-	var raw map[string]interface{}
-	if err := json.Unmarshal(b, &raw); err != nil {
-		return err
-	}
-	if v, ok := raw["source"]; !ok || v == nil {
-		return fmt.Errorf("field source in Directedhyperedge: required")
-	}
-	if v, ok := raw["target"]; !ok || v == nil {
-		return fmt.Errorf("field target in Directedhyperedge: required")
-	}
-	type Plain DirectedEdge
-	var plain Plain
-	if err := json.Unmarshal(b, &plain); err != nil {
-		return err
-	}
-	*j = DirectedEdge(plain)
-	return nil
-}
-
-// UnmarshalJSON implements json.Unmarshaler.
-func (j *Edge) UnmarshalJSON(b []byte) error {
-	var raw map[string]interface{}
-	if err := json.Unmarshal(b, &raw); err != nil {
-		return err
-	}
-	if v, ok := raw["source"]; !ok || v == nil {
-		return fmt.Errorf("field source in Edge: required")
-	}
-	if v, ok := raw["target"]; !ok || v == nil {
-		return fmt.Errorf("field target in Edge: required")
-	}
-	type Plain Edge
-	var plain Plain
-	if err := json.Unmarshal(b, &plain); err != nil {
-		return err
-	}
-	if v, ok := raw["directed"]; !ok || v == nil {
-		plain.Directed = true
-	}
-	*j = Edge(plain)
-	return nil
-}
-
-// UnmarshalJSON implements json.Unmarshaler.
-func (j *UndirectedEdge) UnmarshalJSON(b []byte) error {
-	var raw map[string]interface{}
-	if err := json.Unmarshal(b, &raw); err != nil {
-		return err
-	}
-	if v, ok := raw["nodes"]; !ok || v == nil {
-		return fmt.Errorf("field nodes in Undirectedhyperedge: required")
-	}
-	type Plain UndirectedEdge
-	var plain Plain
-	if err := json.Unmarshal(b, &plain); err != nil {
-		return err
-	}
-	*j = UndirectedEdge(plain)
-	return nil
 }
