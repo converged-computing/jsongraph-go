@@ -1,0 +1,3 @@
+[submodule "jsongraph/schema"]
+	path = jsongraph/schema
+	url = https://github.com/jsongraph/json-graph-specification.git
