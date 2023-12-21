@@ -1,6 +1,9 @@
 package metadata
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"reflect"
+)
 
 // Metadata is a basic map that can be used by any graph object
 type Metadata struct {
@@ -10,6 +13,10 @@ type MetadataElement struct {
 	Name    string
 	Value   string
 	IsValue bool
+
+	// Handle generic interface
+	InterfaceValue any
+	IsInterface    bool
 
 	IntValue int32
 	IsInt    bool
@@ -43,6 +50,9 @@ func (m *Metadata) AddElement(name string, raw any) {
 		m.Elements = append(m.Elements, element)
 		return
 	}
+	element.InterfaceValue = raw
+	element.IsInterface = true
+	m.Elements = append(m.Elements, element)
 }
 
 func (m *Metadata) UnmarshalJSON(data []byte) error {
@@ -69,9 +79,31 @@ func (m *Metadata) MarshalJSON() ([]byte, error) {
 			parsed[element.Name] = element.IntValue
 		} else if element.IsBool {
 			parsed[element.Name] = element.BoolValue
+		} else {
+			parsed[element.Name] = unwrap(element.InterfaceValue)
 		}
 	}
 	// JSON encoding is done the same way as before
 	// returnes bytes, err
 	return json.Marshal(parsed)
+}
+
+// Unwrap an interface into its proper data
+func unwrap(data interface{}) interface{} {
+	d := reflect.ValueOf(data)
+	if reflect.ValueOf(data).Kind() == reflect.Slice {
+		returnSlice := make([]interface{}, d.Len())
+		for i := 0; i < d.Len(); i++ {
+			returnSlice[i] = unwrap(d.Index(i).Interface())
+		}
+		return returnSlice
+	} else if reflect.ValueOf(data).Kind() == reflect.Map {
+		tmpData := make(map[string]interface{})
+		for _, k := range d.MapKeys() {
+			tmpData[k.String()] = unwrap(d.MapIndex(k).Interface())
+		}
+		return tmpData
+	} else {
+		return data
+	}
 }
