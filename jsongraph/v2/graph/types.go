@@ -1,5 +1,9 @@
 package graph
 
+import (
+	"github.com/converged-computing/jsongraph-go/jsongraph/metadata"
+)
+
 /*
 
 A JSONGraphSchema can take one of two types:
@@ -95,36 +99,33 @@ type UndirectedGraph struct {
 }
 
 type Node struct {
-	Label    *string  `json:"label,omitempty" yaml:"label,omitempty" mapstructure:"label,omitempty"`
-	Metadata Metadata `json:"metadata,omitempty" yaml:"metadata,omitempty" mapstructure:"metadata,omitempty"`
+	Label    *string           `json:"label,omitempty" yaml:"label,omitempty" mapstructure:"label,omitempty"`
+	Metadata metadata.Metadata `json:"metadata,omitempty" yaml:"metadata,omitempty" mapstructure:"metadata,omitempty"`
 }
 
-// Metadata is a basic map that can be used by any graph object
-type Metadata map[string]interface{}
-
 type Edge struct {
-	Id       string   `json:"id,omitempty" yaml:"id,omitempty" mapstructure:"id,omitempty"`
-	Source   string   `json:"source" yaml:"source" mapstructure:"source"`
-	Target   string   `json:"target" yaml:"target" mapstructure:"target"`
-	Relation string   `json:"relation,omitempty" yaml:"relation,omitempty" mapstructure:"relation,omitempty"`
-	Label    string   `json:"label,omitempty" yaml:"label,omitempty" mapstructure:"label,omitempty"`
-	Directed bool     `json:"directed,omitempty" yaml:"directed,omitempty" mapstructure:"directed,omitempty"`
-	Metadata Metadata `json:"metadata,omitempty" yaml:"metadata,omitempty" mapstructure:"metadata,omitempty"`
+	Id       string            `json:"id,omitempty" yaml:"id,omitempty" mapstructure:"id,omitempty"`
+	Source   string            `json:"source" yaml:"source" mapstructure:"source"`
+	Target   string            `json:"target" yaml:"target" mapstructure:"target"`
+	Relation string            `json:"relation,omitempty" yaml:"relation,omitempty" mapstructure:"relation,omitempty"`
+	Label    string            `json:"label,omitempty" yaml:"label,omitempty" mapstructure:"label,omitempty"`
+	Directed bool              `json:"directed,omitempty" yaml:"directed,omitempty" mapstructure:"directed,omitempty"`
+	Metadata metadata.Metadata `json:"metadata,omitempty" yaml:"metadata,omitempty" mapstructure:"metadata,omitempty"`
 }
 
 type DirectedEdge struct {
-	Id       string   `json:"id,omitempty" yaml:"id,omitempty" mapstructure:"id,omitempty"`
-	Source   []string `json:"source" yaml:"source" mapstructure:"source"`
-	Target   []string `json:"target" yaml:"target" mapstructure:"target"`
-	Relation string   `json:"relation,omitempty" yaml:"relation,omitempty" mapstructure:"relation,omitempty"`
-	Label    string   `json:"label,omitempty" yaml:"label,omitempty" mapstructure:"label,omitempty"`
-	Metadata Metadata `json:"metadata,omitempty" yaml:"metadata,omitempty" mapstructure:"metadata,omitempty"`
+	Id       string            `json:"id,omitempty" yaml:"id,omitempty" mapstructure:"id,omitempty"`
+	Source   []string          `json:"source" yaml:"source" mapstructure:"source"`
+	Target   []string          `json:"target" yaml:"target" mapstructure:"target"`
+	Relation string            `json:"relation,omitempty" yaml:"relation,omitempty" mapstructure:"relation,omitempty"`
+	Label    string            `json:"label,omitempty" yaml:"label,omitempty" mapstructure:"label,omitempty"`
+	Metadata metadata.Metadata `json:"metadata,omitempty" yaml:"metadata,omitempty" mapstructure:"metadata,omitempty"`
 }
 
 type UndirectedEdge struct {
-	Id       string   `json:"id,omitempty" yaml:"id,omitempty" mapstructure:"id,omitempty"`
-	Nodes    []string `json:"nodes" yaml:"nodes" mapstructure:"nodes"`
-	Relation string   `json:"relation,omitempty" yaml:"relation,omitempty" mapstructure:"relation,omitempty"`
-	Label    string   `json:"label,omitempty" yaml:"label,omitempty" mapstructure:"label,omitempty"`
-	Metadata Metadata `json:"metadata,omitempty" yaml:"metadata,omitempty" mapstructure:"metadata,omitempty"`
+	Id       string            `json:"id,omitempty" yaml:"id,omitempty" mapstructure:"id,omitempty"`
+	Nodes    []string          `json:"nodes" yaml:"nodes" mapstructure:"nodes"`
+	Relation string            `json:"relation,omitempty" yaml:"relation,omitempty" mapstructure:"relation,omitempty"`
+	Label    string            `json:"label,omitempty" yaml:"label,omitempty" mapstructure:"label,omitempty"`
+	Metadata metadata.Metadata `json:"metadata,omitempty" yaml:"metadata,omitempty" mapstructure:"metadata,omitempty"`
 }
