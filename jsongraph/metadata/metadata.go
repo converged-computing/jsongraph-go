@@ -18,6 +18,33 @@ type MetadataElement struct {
 	IsBool    bool
 }
 
+// AddElement adds an element to the metadata elements list
+// This can be used in the API or in the json Unmarshall function
+func (m *Metadata) AddElement(name string, raw any) {
+	element := MetadataElement{Name: name}
+	value, ok := raw.(string)
+	if ok {
+		element.Value = value
+		element.IsValue = true
+		m.Elements = append(m.Elements, element)
+		return
+	}
+	intValue, ok := raw.(int32)
+	if ok {
+		element.IntValue = intValue
+		element.IsInt = true
+		m.Elements = append(m.Elements, element)
+		return
+	}
+	boolValue, ok := raw.(bool)
+	if ok {
+		element.BoolValue = boolValue
+		element.IsBool = true
+		m.Elements = append(m.Elements, element)
+		return
+	}
+}
+
 func (m *Metadata) UnmarshalJSON(data []byte) error {
 	m.Elements = []MetadataElement{}
 	raw := make(map[string]interface{})
@@ -26,28 +53,7 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	for k, r := range raw {
-		element := MetadataElement{Name: k}
-		value, ok := r.(string)
-		if ok {
-			element.Value = value
-			element.IsValue = true
-			m.Elements = append(m.Elements, element)
-			continue
-		}
-		intValue, ok := r.(int32)
-		if ok {
-			element.IntValue = intValue
-			element.IsInt = true
-			m.Elements = append(m.Elements, element)
-			continue
-		}
-		boolValue, ok := r.(bool)
-		if ok {
-			element.BoolValue = boolValue
-			element.IsBool = true
-			m.Elements = append(m.Elements, element)
-			continue
-		}
+		m.AddElement(k, r)
 	}
 	return nil
 }
