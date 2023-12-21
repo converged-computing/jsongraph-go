@@ -53,20 +53,23 @@ type UndirectedJsonGraphList struct {
 
 // New functions handle creation of new graphs (and directed, etc.)
 func NewGraph() *JsonGraph {
-	base := GraphBase{Directed: true}
 	edges := []Edge{}
+	nodes := map[string]Node{}
+	base := GraphBase{Directed: true, Nodes: nodes}
 	return &JsonGraph{Graph: Graph{GraphBase: base, Edges: edges}}
 }
 
 func NewDirectedGraph() *DirectedJsonGraph {
-	base := GraphBase{Directed: true}
 	edges := []DirectedEdge{}
+	nodes := map[string]Node{}
+	base := GraphBase{Directed: true, Nodes: nodes}
 	return &DirectedJsonGraph{Graph: DirectedGraph{GraphBase: base, Edges: edges}}
 }
 
 func NewUndirectedGraph() *UndirectedJsonGraph {
-	base := GraphBase{Directed: false}
 	edges := []UndirectedEdge{}
+	nodes := map[string]Node{}
+	base := GraphBase{Directed: false, Nodes: nodes}
 	return &UndirectedJsonGraph{Graph: UndirectedGraph{GraphBase: base, Edges: edges}}
 }
 
