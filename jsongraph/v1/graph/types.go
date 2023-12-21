@@ -1,5 +1,9 @@
 package graph
 
+import (
+	"encoding/json"
+)
+
 /*
 
 A JSONGraphSchema can take one of two types:
@@ -17,6 +21,16 @@ type JsonGraph struct {
 
 // Metadata is a basic map that can be used by any graph object
 type Metadata map[string]interface{}
+
+// Metadata has a custom MashalJSON function
+// A bit janky for now :)
+func (m Metadata) MarshalJSON() ([]byte, error) {
+	parsed := map[string]string{}
+	for k, v := range m {
+		parsed[k] = string(v.(string))
+	}
+	return json.Marshal(parsed)
+}
 
 type JsonGraphList struct {
 	Label    string   `json:"label,omitempty" yaml:"label,omitempty" mapstructure:"label,omitempty"`
