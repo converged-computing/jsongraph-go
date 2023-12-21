@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/converged-computing/jsongraph-go/jsongraph/graph"
+	"github.com/converged-computing/jsongraph-go/jsongraph/v2/graph"
 )
 
 func main() {
-	fmt.Println("This example reads in a les miserables graph")
-	jsonFileName := flag.String("json", "examples/miserables/les_miserables.json", "json input file")
+	fmt.Println("This example reads in a hyper-directed graph")
+	jsonFileName := flag.String("json", "examples/v2/hyper-directed/hyper-directed.json", "json input file")
 	flag.Parse()
 
 	jsonFile := *jsonFileName
@@ -25,7 +25,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	g := graph.JsonGraph{}
+	g := graph.DirectedJsonGraph{}
 	err = json.Unmarshal([]byte(file), &g)
 	if err != nil {
 		fmt.Printf("error unmarshalling %s:%s\n", jsonFile, err)

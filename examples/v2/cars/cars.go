@@ -6,14 +6,14 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/converged-computing/jsongraph-go/jsongraph/graph"
+	"github.com/converged-computing/jsongraph-go/jsongraph/v2/graph"
 )
 
 func main() {
 	fmt.Println("This example reads in a cars graph")
 
 	// Assumes running from the root
-	jsonFileName := flag.String("json", "examples/cars/car_graphs.json", "car_graphs.json file")
+	jsonFileName := flag.String("json", "examples/v2/cars/car_graphs.json", "car_graphs.json file")
 	flag.Parse()
 
 	jsonFile := *jsonFileName
