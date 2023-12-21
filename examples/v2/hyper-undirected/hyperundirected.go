@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/converged-computing/jsongraph-go/jsongraph/graph"
+	"github.com/converged-computing/jsongraph-go/jsongraph/v2/graph"
 )
 
 func main() {
 	fmt.Println("This example reads in a hyper-undirected graph")
-	jsonFileName := flag.String("json", "examples/hyper-undirected/hyper-undirected.json", "json input file")
+	jsonFileName := flag.String("json", "examples/v2/hyper-undirected/hyper-undirected.json", "json input file")
 	flag.Parse()
 
 	jsonFile := *jsonFileName
