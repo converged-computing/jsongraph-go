@@ -68,7 +68,7 @@ func (m *Metadata) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func (m *Metadata) MarshalJSON() ([]byte, error) {
+func (m Metadata) MarshalJSON() ([]byte, error) {
 
 	parsed := map[string]any{}
 
