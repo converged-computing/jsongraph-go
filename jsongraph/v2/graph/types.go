@@ -25,34 +25,34 @@ type GraphBase struct {
 	Directed bool            `json:"directed,omitempty" yaml:"directed,omitempty" mapstructure:"directed,omitempty"`
 	Type     string          `json:"type,omitempty" yaml:"type,omitempty" mapstructure:"type,omitempty"`
 	Nodes    map[string]Node `json:"nodes" yaml:"nodes" mapstructure:"nodes"`
-}
+} 
 
 // A JSONGraph can either be parsed into a list of graps or single graph
 // We have types for standard, and then explicitly directed and undirected
 type JsonGraph struct {
-	Graph Graph `json:"graph"`
+	Graph Graph `json:"graph" yaml:"graph" mapstructure:"graph"`
 }
 
 type JsonGraphList struct {
-	Graphs []Graph `json:"graphs"`
+	Graphs []Graph `json:"graphs" yaml:"graphs" mapstructure:"graphs"`
 }
 
 // DirectedJsonGraph is explicitly a directed graph
 type DirectedJsonGraph struct {
-	Graph DirectedGraph `json:"graph"`
+	Graph DirectedGraph `json:"graph" yaml:"graph" mapstructure:"graph"`
 }
 
 type DirectedJsonGraphList struct {
-	Graphs []DirectedGraph `json:"graphs"`
+	Graphs []DirectedGraph `json:"graphs" yaml:"graphs" mapstructure:"graphs"`
 }
 
 // UndirectedJsonGraph is explicitly an undirected graph
 type UndirectedJsonGraph struct {
-	Graph UndirectedGraph `json:"graph"`
+	Graph UndirectedGraph `json:"graph" yaml:"graph" mapstructure:"graph"`
 }
 
 type UndirectedJsonGraphList struct {
-	Graphs []UndirectedGraph `json:"graphs"`
+	Graphs []UndirectedGraph `json:"graphs" yaml:"graphs" mapstructure:"graphs"`
 }
 
 // New functions handle creation of new graphs (and directed, etc.)
@@ -80,7 +80,7 @@ func NewUndirectedGraph() *UndirectedJsonGraph {
 // A standard Json graph
 // - has a list of edges
 type Graph struct {
-	GraphBase
+	GraphBase 
 	Edges []Edge `json:"edges" yaml:"edges" mapstructure:"edges"`
 }
 
