@@ -33,4 +33,11 @@ func main() {
 	}
 
 	fmt.Printf("Graph with %d nodes and %d edges.\n", len(g.Graph.Nodes), len(g.Graph.Edges))
+	toprint, err := json.Marshal(g.Graph)
+	if err != nil {
+		fmt.Printf("error marshalling %s:%s\n", jsonFile, err)
+		os.Exit(1)
+	}
+	fmt.Println(string(toprint))
+
 }
