@@ -39,5 +39,4 @@ func main() {
 		fmt.Printf("error marshalling %s:%s\n", jsonFile, err)
 		os.Exit(1)
 	}
-
 }

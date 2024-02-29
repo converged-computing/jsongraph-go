@@ -2,12 +2,17 @@ package metadata
 
 import (
 	"encoding/json"
+	"fmt"
 	"reflect"
 )
 
 // Metadata is a basic map that can be used by any graph object
 type Metadata struct {
 	Elements []MetadataElement
+
+	// Lookup is explicitly for developers, so it is easy
+	// to find a known value (and type it correctly)
+	lookup map[string]interface{}
 }
 type MetadataElement struct {
 	Name    string
@@ -25,9 +30,50 @@ type MetadataElement struct {
 	IsBool    bool
 }
 
+// GetXElement will retrieve (and type) an element
+// This is intended for interacting with the struct in Go
+func (m *Metadata) GetStringElement(name string) (string, error) {
+	element, ok := m.lookup[name]
+	if !ok {
+		return "", fmt.Errorf("string element %s does not exist", name)
+	}
+	return element.(string), nil
+}
+
+func (m *Metadata) GetIntElement(name string) (int32, error) {
+	element, ok := m.lookup[name]
+	if !ok {
+		return -1, fmt.Errorf("integer element %s does not exist", name)
+	}
+	intValue, ok := element.(int)
+	if ok {
+		return int32(intValue), nil
+	}
+	floatValue, ok := element.(float64)
+	if ok {
+		return int32(floatValue), nil
+	}
+	return element.(int32), nil
+}
+
+func (m *Metadata) GetBoolElement(name string) (bool, error) {
+	element, ok := m.lookup[name]
+	if !ok {
+		return false, fmt.Errorf("boolean element %s does not exist", name)
+	}
+	return element.(bool), nil
+}
+
 // AddElement adds an element to the metadata elements list
 // This can be used in the API or in the json Unmarshall function
 func (m *Metadata) AddElement(name string, raw any) {
+
+	if m.lookup == nil {
+		m.lookup = make(map[string]interface{})
+	}
+
+	// Add to global lookup
+	m.lookup[name] = raw
 	element := MetadataElement{Name: name}
 	value, ok := raw.(string)
 	if ok {
