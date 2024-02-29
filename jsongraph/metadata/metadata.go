@@ -39,13 +39,23 @@ func (m *Metadata) GetStringElement(name string) (string, error) {
 	}
 	return element.(string), nil
 }
+
 func (m *Metadata) GetIntElement(name string) (int32, error) {
 	element, ok := m.lookup[name]
 	if !ok {
 		return -1, fmt.Errorf("integer element %s does not exist", name)
 	}
+	intValue, ok := element.(int)
+	if ok {
+		return int32(intValue), nil
+	}
+	floatValue, ok := element.(float64)
+	if ok {
+		return int32(floatValue), nil
+	}
 	return element.(int32), nil
 }
+
 func (m *Metadata) GetBoolElement(name string) (bool, error) {
 	element, ok := m.lookup[name]
 	if !ok {
